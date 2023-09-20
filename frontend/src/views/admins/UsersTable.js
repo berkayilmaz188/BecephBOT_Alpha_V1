@@ -16,6 +16,8 @@ import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -47,6 +49,8 @@ const statusObj = {
 const UsersTable = (props) => {
     const { id } = props;
 
+    const [searchTerm, setSearchTerm] = useState('');
+
     const [usersDetailsData, setUsersDetailsData] = useState([]);
     const [messageInputs, setMessageInputs] = useState({}); 
 
@@ -57,7 +61,7 @@ const UsersTable = (props) => {
    useEffect(() => {
     const fetchUsersData = async () => {
       try {
-        const response = await axios.post('/users', {
+        const response = await axios.post('/api/server/users', {
           serverID: id,
         });
         const Usersdata = response.data;
@@ -81,7 +85,7 @@ const UsersTable = (props) => {
   const handleMessageSend = async (userID) => {
     try {
       // Mesajı /messageUsers endpoint'ine gönder
-      await axios.post('/messageUsers', {
+      await axios.post('/api/message/messageUsers', {
         serverID: id,
         userID: userID,
         message: messageInputs[userID], // Her kullanıcı için ilgili mesajı kullanın
@@ -108,12 +112,53 @@ const UsersTable = (props) => {
     setSnackbarOpen(false);
   };
 
+  const filteredUsers = usersDetailsData.filter((user) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    const lowerCaseDisplayName = user.displayName.toLowerCase();
+    const lowerCaseTag = user.tag.toLowerCase();
+  
+    // displayName veya tag alanları arama terimini içeriyorsa kullanıcıyı göster
+    return lowerCaseDisplayName.includes(lowerCaseSearchTerm) || lowerCaseTag.includes(lowerCaseSearchTerm);
+  });
+  
+
       
   return (
     <Card>
+      
       <TableContainer>
+        
         <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+        <div style={{ marginBottom: '4px', display: 'flex', alignItems: 'center' }}>
+          <SearchIcon sx={{ color: 'gray', marginRight: '4px', marginLeft:'4px' }} />
+          <TextField
+            placeholder="Arama"
+            variant="standard"
+            size="small"
+            fullWidth
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '0', // Çerçeveyi kaldır
+              },
+              '& .MuiOutlinedInput-input': {
+                textAlign: 'center', // Metni ortala
+              },
+            }}
+            InputProps={{
+              style: {
+                border: 'none', // Dış çerçeveyi kaldır
+              },
+            }}
+            InputLabelProps={{
+              shrink: false, // Etiketi küçültme
+              style: { fontSize: 10 },
+            }}
+          />
+        </div>
           <TableHead>
+            
             <TableRow>
               <TableCell>Kullanici Adi</TableCell>
               <TableCell>Admin</TableCell>
@@ -122,9 +167,23 @@ const UsersTable = (props) => {
               <TableCell>Send Message</TableCell>
               
             </TableRow>
+            
           </TableHead>
           <TableBody>
-            {usersDetailsData.map(row => (
+          {usersDetailsData
+              .filter((row) => {
+                const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+                if (normalizedSearchTerm === '') {
+                  return true;
+                } else {
+                  const normalizedDisplayName = row.displayName.toLowerCase();
+                  const normalizedTag = row.tag.toLowerCase();
+                  return (
+                    normalizedDisplayName.includes(normalizedSearchTerm) ||
+                    normalizedTag.includes(normalizedSearchTerm)
+                  );
+                }
+              }).map(row => (
               <TableRow hover key={row.displayName} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
                 
                 <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
@@ -216,6 +275,7 @@ const UsersTable = (props) => {
                     }}
                   />
                 </TableCell>
+                
 
               </TableRow>
             ))}
@@ -224,7 +284,7 @@ const UsersTable = (props) => {
       </TableContainer>
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={5000} // Bildirimin otomatik olarak kapanmasını ayarlayabilirsiniz (ms cinsinden)
+        autoHideDuration={7000} // Bildirimin otomatik olarak kapanmasını ayarlayabilirsiniz (ms cinsinden)
         onClose={handleSnackbarClose}
       >
         <Alert

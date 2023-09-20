@@ -671,6 +671,11 @@
   resolved "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-12.0.4.tgz"
   integrity sha512-7WMen1qhF5JmjKD9S5IEgEoaPJOXyIZj/Nsqa8ZSWxdF5oogp3uYYbKb/rvMYoKzpIbjyoLH/OCM5lm5IFM4iw==
 
+"@next/swc-win32-x64-msvc@12.0.4":
+  version "12.0.4"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.0.4.tgz"
+  integrity sha512-f+7WNIJOno5QEelrmob+3vN5EZJb3KCkOrnvUsQ0+LCCD0dIPIhCjeHAh3BGj9msGu8ijnXvD7JxVxE5V26cnQ==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"

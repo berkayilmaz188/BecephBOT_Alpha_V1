@@ -88,7 +88,7 @@ const ServerDetailsCard = (props) => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.post('/usersStatus', {
+            const response = await axios.post('/api/server/usersStatus', {
               serverID: id,
             });
             const data = response.data;

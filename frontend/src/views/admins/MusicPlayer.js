@@ -74,7 +74,7 @@ const MusicPlayer = (props) => {
     if (playedMusicData) {
       const { serverID, voiceChannelID } = playedMusicData;
       axios
-        .post(`/music${actionType}`, {
+        .post(`/api/music/music${actionType}`, {
           serverID,
           voiceChannelID,
         })

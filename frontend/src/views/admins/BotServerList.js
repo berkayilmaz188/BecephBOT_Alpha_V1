@@ -24,7 +24,7 @@ const AdminsDashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('/BekoBOTServers');
+            const response = await axios.get('/api/server/BekoBOTServers');
             const data = response.data;
             setServerData(data);
           } catch (error) {

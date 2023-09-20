@@ -123,7 +123,7 @@ const ListTextChannels = (props) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.post('/textchannelsID', {
+          const response = await axios.post('/api/server/textchannels', {
             serverID: id,
           });
           const data = response.data;
@@ -135,7 +135,7 @@ const ListTextChannels = (props) => {
     
       const fetchData2 = async () => {
         try {
-          const response2 = await axios.post('/voiceChannels', {
+          const response2 = await axios.post('/api/server/voiceChannels', {
             serverID: id,
           });
           const data2 = response2.data;
@@ -180,7 +180,7 @@ const ListTextChannels = (props) => {
     const textChannelID = channelId;
     
     // Örneğin axios ile bir POST isteği göndermek:
-     axios.post('/messageChannel', {
+     axios.post('/api/message/messageChannel', {
        serverID,
        textChannelID,
        textMessage,
@@ -205,7 +205,7 @@ const ListTextChannels = (props) => {
     const serverID = id;
     const voiceChannelID = VoiceChannelId;
     
-    axios.post('/musicPlay', {
+    axios.post('/api/music/musicPlay', {
       serverID,
       voiceChannelID,
       musicPlay,

@@ -28,7 +28,6 @@ const client = new Client({
 
 let connection;
 let player;
-let url;
 let currentURL = '';
 const musicUrls = new Map();
 
@@ -117,63 +116,7 @@ client.on('messageCreate', async message => {
         message.reply('You need to be in a voice channel.');
       }
     }
-    else if (message.content == "!gettime") {
-      try{
-        let connection = getVoiceConnection(message.guildId)
-        console.log(connection.state.status);
-        if (true) {
-          const currentTime = connection.state.subscription.player.state.resource.playbackDuration;
-          console.log("current time: " + currentTime);
-          ytdl.getBasicInfo(curl).then(info => {
-            console.log(info.videoDetails.lengthSeconds);
-            const maxTime = info.videoDetails.lengthSeconds * 1000; // stream not defined
-            const currentMinutes = Math.floor(currentTime / 1000 / 60);
-            const currentSeconds = Math.floor((currentTime / 1000) % 60);
-            const maxMinutes = Math.floor(maxTime / 1000 / 60);
-            const maxSeconds = Math.floor((maxTime / 1000) % 60);
-            message.channel.send(`${currentMinutes}:${currentSeconds} / ${maxMinutes}:${maxSeconds}`);
-          });
-
-        } else {
-          message.channel.send('Bot is not playing music.');
-        }
-      }catch(err){
-        console.log(`Error occured in !gettime command handler \n ${err.message}`)
-        if(err.message.startsWith("Cannot read properties of")){
-          message.channel.send("First, play a song.")
-        }
-      }
-
-    }
-    else if (message.content.startsWith('!sar ')) {
-      const time = message.content.split(' ')[1];  // Örneğin "1:30"
-      const parts = time.split(":");  // ["1", "30"]
-      const minutes = +parts[0];  // 1
-      const seconds = +parts[1];  // 30
-      const totalSeconds = minutes * 60 + seconds;  // 90 saniye
-  
-      // Oyuncuyu durdur
-      if (player) {
-          player.stop();
-      }
-  
-      // Yeni bir kaynak oluştur ve `begin` parametresini ayarla
-      let newURL = currentURL.split("?")[0];  // Query parametrelerini kaldır
-      newURL += `?t=${totalSeconds}`;  // Yeni zaman damgasını ekle
-  
-      const resource = createAudioResource(ytdl(newURL, { 
-          filter: 'audioonly'
-      }));
-      
-      // Oyuncuyu yeni kaynakla başlat
-      if (player) {
-          player.play(resource);
-          connection.subscribe(player);
-      }
-  
-      message.reply(`Müziği ${totalSeconds} saniyeye getirdim.`);
-  }
-  
+    
     
      else if (message.content === '!pause') {
       if (player) {
@@ -218,7 +161,7 @@ client.on('guildMemberAdd', member => {
 
 
 
-client.login('MTA2OTczNDIwNzQyNjkyODc0MA.GahogH.z1eiEVswqsk9ulaV32INlE6ETFgnyXB92TIxJE');
+client.login('');
 
 app.get('/BekoBOTServers', (req, res) => {
   const servers = client.guilds.cache.map(guild => {
