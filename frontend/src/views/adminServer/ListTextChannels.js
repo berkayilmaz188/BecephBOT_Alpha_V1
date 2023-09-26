@@ -14,8 +14,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Trophy from '../dashboard/Trophy'
 import Grid from '@mui/material/Grid';
-
-
+import { useRouter } from 'next/router';
 
 const depositData = [
   {
@@ -119,38 +118,39 @@ const ListTextChannels = (props) => {
   
     const [textChannelsData, setTextChannelsData] = useState([]);
     const [voiceChannelsData, setVoiceChannelsData] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.post('/api/server/textchannels', {
-            serverID: id,
-          });
+          const response = await axios.post('/api/server/textchannels', { serverID: id });
           const data = response.data;
           setTextChannelsData(data);
         } catch (error) {
           console.error('Text kanal veri getirme hatası:', error);
+          if (error.response && error.response.status === 401) {
+            router.push('/pages/login'); // Status 401 ise kullanıcıyı login sayfasına yönlendir.
+          }
         }
       };
-    
+  
       const fetchData2 = async () => {
         try {
-          const response2 = await axios.post('/api/server/voiceChannels', {
-            serverID: id,
-          });
+          const response2 = await axios.post('/api/server/voiceChannels', { serverID: id });
           const data2 = response2.data;
           setVoiceChannelsData(data2);
         } catch (error2) {
           console.error('Ses kanal veri getirme hatası:', error2);
+          if (error2.response && error2.response.status === 401) {
+            router.push('/pages/login'); // Status 401 ise kullanıcıyı login sayfasına yönlendir.
+          }
         }
       };
-    
+  
       fetchData();
       fetchData2();
-    }, [id]);
+    }, [id, router]);
     
-
-  
 
     const [channelTexts, setChannelTexts] = useState({});
 

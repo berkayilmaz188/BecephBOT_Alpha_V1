@@ -23,6 +23,12 @@ import TabSecurity from 'src/views/account-settings/TabSecurity'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 
+import { checkTokenAndRedirect } from 'src/utils/redirects';
+
+export async function getServerSideProps(context) {
+  return checkTokenAndRedirect(context);
+}
+
 const Tab = styled(MuiTab)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     minWidth: 100

@@ -20,22 +20,31 @@ import { useRouter } from 'next/router';
 
 const AdminsDashboard = () => {
     const [serverData, setServerData] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('/api/server/BekoBOTServers');
-            const data = response.data;
-            setServerData(data);
-          } catch (error) {
-            console.error('Veri getirme hatası:', error);
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('/api/server/BekoBOTServers', { withCredentials: true });
+          const data = response.data;
+          setServerData(data);
+        } catch (error) {
+          console.error('Veri getirme hatası:', error);
+          if (error.response && error.response.status === 401) {
+            try {
+              await axios.post('/api/adminAuth/logout', {}, { withCredentials: true }); // Çerezi sil
+              router.push('/Adminlogin');
+            } catch (logoutError) {
+              console.error('Logout hatası:', logoutError);
+            }
           }
-        };
+        }
+      };
     
-        fetchData();
-      }, []);
-
-      const router = useRouter(); // useRouter'ı burada alabilirsiniz
+      fetchData();
+    }, []);
+    
+    
 
       const handleButtonClick = (id) => {
         router.push(`/adminServer/${id}`);

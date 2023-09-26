@@ -10,24 +10,26 @@ import VerticalLayout from 'src/@core/layouts/VerticalLayout'
 import VerticalNavItems from 'src/navigation/vertical'
 
 // ** Component Import
-import UpgradeToProButton from './components/UpgradeToProButton'
 import VerticalAppBarContent from './components/vertical/AppBarContent'
+import VerticalAppBarContentNotLogin from './components/vertical/AppBarContentNotLogin'
 
 // ** Hook Import
 import { useSettings } from 'src/@core/hooks/useSettings'
+import navigation from 'src/navigation/vertical'; 
+import { useRouter } from 'next/router';
 
-const UserLayout = ({ children }) => {
+
+const UserLayout = ({ children, visibleItems }) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
+  const router = useRouter();
 
-  /**
-   *  The below variable will hide the current layout menu at given screen size.
-   *  The menu will be accessible from the Hamburger icon only (Vertical Overlay Menu).
-   *  You can change the screen size from which you want to hide the current layout menu.
-   *  Please refer useMediaQuery() hook: https://mui.com/components/use-media-query/,
-   *  to know more about what values can be passed to this hook.
-   *  ! Do not change this value unless you know what you are doing. It can break the template.
-   */
+  const navItems = navigation();
+  const filteredNavItems = visibleItems
+    ? navItems.filter(item => visibleItems.includes(item.title))
+    : navItems;
+
+
   const hidden = useMediaQuery(theme => theme.breakpoints.down('lg'))
 
   const UpgradeToProImg = () => {
@@ -44,22 +46,33 @@ const UserLayout = ({ children }) => {
     )
   }
 
+  const isHomePage = router.pathname === '/';
+
   return (
     <VerticalLayout
       hidden={hidden}
       settings={settings}
       saveSettings={saveSettings}
-      verticalNavItems={VerticalNavItems()} // Navigation Items
+      verticalNavItems={filteredNavItems}
       afterVerticalNavMenuContent={UpgradeToProImg}
       verticalAppBarContent={(
         props // AppBar Content
       ) => (
-        <VerticalAppBarContent
-          hidden={hidden}
-          settings={settings}
-          saveSettings={saveSettings}
-          toggleNavVisibility={props.toggleNavVisibility}
-        />
+        isHomePage ? (
+          <VerticalAppBarContentNotLogin
+            hidden={hidden}
+            settings={settings}
+            saveSettings={saveSettings}
+            toggleNavVisibility={props.toggleNavVisibility}
+          />
+        ) : (
+          <VerticalAppBarContent
+            hidden={hidden}
+            settings={settings}
+            saveSettings={saveSettings}
+            toggleNavVisibility={props.toggleNavVisibility}
+          />
+        )
       )}
     >
       {children}

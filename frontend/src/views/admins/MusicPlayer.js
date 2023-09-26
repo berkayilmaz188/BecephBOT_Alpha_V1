@@ -43,7 +43,9 @@ const MusicPlayer = (props) => {
   const { playedMusicData } = props;
   const [musicPlayerStatus, setMusicPlayerStatus] = useState([]);
   
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  );  
   const [imageHeight, setImageHeight] = useState(115);
 
   useEffect(() => {

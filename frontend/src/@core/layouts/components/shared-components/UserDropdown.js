@@ -3,7 +3,8 @@ import { useState, Fragment } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
-
+import { destroyCookie } from 'nookies';
+import axios from 'axios';
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
@@ -13,6 +14,7 @@ import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+
 
 // ** Icons Imports
 import CogOutline from 'mdi-material-ui/CogOutline'
@@ -49,6 +51,15 @@ const UserDropdown = () => {
     }
     setAnchorEl(null)
   }
+
+  const handleLogout = async () => {
+    try {
+      await axios.post('/api/adminAuth/logout'); // Backend'inizin adresini ve endpoint'i kullanarak güncelleyin
+      router.push('/');
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  };
 
   const styles = {
     py: 2,
@@ -144,7 +155,7 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/pages/login')}>
+        <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>

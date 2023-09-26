@@ -18,16 +18,6 @@ const navigation = () => {
       path: '/'
     },
     {
-      title: 'AdminsDashboard',
-      icon: HomeOutline,
-      path: '/admins'
-    },
-    {
-      title: 'AdminServerDashboard',
-      icon: HomeOutline,
-      path: '/adminServer/[id]', 
-    },
-    {
       title: 'Account Settings',
       icon: AccountCogOutline,
       path: '/account-settings'

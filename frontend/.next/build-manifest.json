@@ -30,15 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/adminServer/[id]": [
+    "/account-settings": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/adminServer/[id].js"
-    ],
-    "/admins": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/admins.js"
+      "static/chunks/pages/account-settings.js"
     ]
   },
   "ampFirstPages": []
