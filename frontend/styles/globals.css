@@ -22,3 +22,27 @@ code:not([class*='language-']):after {
 code[class*='language-'] {
   padding: 0;
 }
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scrollbar genişliğini ince yapar */
+/* Scrollbar genişliğini ayarlayın */
+/* Scrollbar genişliğini ayarlayın */
+.newscrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Scrollbar track'ini şeffaf yapın */
+.newscrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Track arkaplanı şeffaf */
+}
+
+/* Scrollbar thumb'ını belirgin bir renk yapın */
+.newscrollbar::-webkit-scrollbar-thumb {
+  background: #a29e9e; /* Thumb rengi */
+}
+
+
+

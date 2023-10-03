@@ -40,7 +40,7 @@ const sortUsers = (usersData) => {
 
 
 const statusObj = {
-  offline: { color: 'primary' },
+  offline: { backgroundcolor: '#a29e9e' },
   dnd: { color: 'error' },
   idle: { color: 'warning' },
   online: { color: 'success' }
@@ -126,7 +126,7 @@ const UsersTable = (props) => {
   return (
     <Card>
       
-      <TableContainer>
+      <TableContainer className="newscrollbar" style={{ maxHeight: 50 * 10 + 'px', overflowY: 'auto' }}>
         
         <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
         <div style={{ marginBottom: '4px', display: 'flex', alignItems: 'center' }}>

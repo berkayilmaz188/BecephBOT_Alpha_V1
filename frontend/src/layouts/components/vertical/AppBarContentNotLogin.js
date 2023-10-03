@@ -1,13 +1,12 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
+
 import useMediaQuery from '@mui/material/useMediaQuery'
-import InputAdornment from '@mui/material/InputAdornment'
+
 
 // ** Icons Imports
-import Menu from 'mdi-material-ui/Menu'
-import Magnify from 'mdi-material-ui/Magnify'
+import Button from '@mui/material/Button';
+import { useRouter } from 'next/router';
 
 // ** Components
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
@@ -16,39 +15,30 @@ import NotificationDropdown from 'src/@core/layouts/components/shared-components
 
 const AppBarContentNotLogin = props => {
   // ** Props
-  const { hidden, settings, saveSettings, toggleNavVisibility } = props
+
 
   // ** Hook
   const hiddenSm = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push('https://discord.com/api/oauth2/authorize?client_id=1069734207426928740&redirect_uri=http%3A%2F%2Flocalhost%3A4002%2Fauth%2Fdiscord%2Fcallback&response_type=code&scope=identify%20guilds%20email');
+  }
+
+  
+
   return (
     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
-        {hidden ? (
-          <IconButton
-            color='inherit'
-            onClick={toggleNavVisibility}
-            sx={{ ml: -2.75, ...(hiddenSm ? {} : { mr: 3.5 }) }}
-          >
-            <Menu />
-          </IconButton>
-        ) : null}
-
+  
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        {hiddenSm ? null : (
-          <Box
-            component='a'
-            target='_blank'
-            rel='noreferrer'
-            sx={{ mr: 4, display: 'flex' }}
-            href='https://github.com/berkayilmaz188'
-          >       
-          </Box>
-        )}
-        <ModeToggler settings={settings} saveSettings={saveSettings} />
-        <NotificationDropdown />
-        <UserDropdown />
+
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+          <Button color="inherit" onClick={handleLoginClick}>Giriş Yap</Button>
+        </Box>
+  
       </Box>
     </Box>
   )

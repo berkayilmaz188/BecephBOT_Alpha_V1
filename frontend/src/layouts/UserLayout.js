@@ -38,7 +38,7 @@ const UserLayout = ({ children, visibleItems }) => {
         <a
           target='_blank'
           rel='noreferrer'
-          href='https://discord.gg/CVXBwtFQ'
+          href='https://discord.gg/qSASVCQa94'
         >
           <img width={220} alt='upgrade to premium' src={`/images/misc/upgrade-banner-${settings.mode}.png`} />
         </a>

@@ -226,14 +226,19 @@ const ListTextChannels = (props) => {
 
 
   return (
-    <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: ['column', 'column', 'row'] }}>
+    <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: ['column', 'column', 'row'] }} style={{ maxHeight: 37 * 10 + 'px', overflowY: 'auto' }} >
       
   <Box sx={{ width: '100%' }}>
     <CardHeader
       title='Mesaj Kanallari'
-      // Diğer stiller
+      sx={{ pt: 5.5, alignItems: 'center', '& .MuiCardHeader-action': { mt: 0.6 } }}
+      action={<Typography variant='caption'>Kanal üzerine tıklayıp mesaj gönderebilirsiniz.</Typography>}
+      titleTypographyProps={{
+        variant: 'h6',
+        sx: { lineHeight: '1.6 !important', letterSpacing: '0.15px !important' }
+      }}
     />
-    <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }}>
+    <CardContent sx={{ pb: theme => `${theme.spacing(5.5)} !important` }} >
       {textChannelsData.map((item, index) => {
         return (
           <Grid

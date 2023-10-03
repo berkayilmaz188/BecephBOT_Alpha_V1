@@ -8,7 +8,7 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 
-import ListTextChannels from 'src/views/adminServer/ListTextChannels'
+import ListTextChannels from 'src/views/admins/ListTextChannels'
 
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -17,6 +17,10 @@ import ServerDetailsCard from 'src/views/admins/ServerDetailsCard'
 import UsersTable from 'src/views/admins/UsersTable'
 
 import { checkTokenAndRedirect } from 'src/utils/redirects';
+import ListVoiceChannels from 'src/views/admins/ListVoiceChannels'
+import ListServerAdmins from 'src/views/admins/ListServerAdmins'
+import ListAdminRoles from 'src/views/admins/ListAdminRoles'
+import ListServerAdminsRoles from 'src/views/admins/ListServerAdminRoles'
 
 export async function getServerSideProps(context) {
   return checkTokenAndRedirect(context);
@@ -28,9 +32,14 @@ const AdminServerDashboard = () => {
     const { id } = router.query;
 
     const [playedMusicData, setPlayedMusicData] = useState({});
+    const [serverAdminsData, setServerAdminsData] = useState({});
 
     const handleMusicPlay = (responceData) => {
       setPlayedMusicData(responceData); // Responce verilerini ayarlayın
+    };
+
+    const handleServerAdminsData = (responceData) => {
+      setServerAdminsData(responceData); // Responce verilerini ayarlayın
     };
 
   return (
@@ -43,19 +52,19 @@ const AdminServerDashboard = () => {
         <Grid item xs={12} md={8}>
           <ServerDetailsCard id={id}/>
         </Grid>
-
-        <Grid item xs={12} md={12} lg={12}>
-          <ListTextChannels id={id} onMusicPlay={handleMusicPlay} />
+        <Grid item xs={12} md={12} lg={6}>
+          <ListTextChannels id={id} />
+        </Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          <ListVoiceChannels id={id} onMusicPlay={handleMusicPlay} />
         </Grid>
         <Grid item xs={12}>
           <UsersTable id={id} />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-        <SalesByCountries />
-        </Grid>
         <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
+          <ListServerAdminsRoles id={id}/>
         </Grid>
+
  
       </Grid>
     </ApexChartWrapper>
